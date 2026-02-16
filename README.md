@@ -11,7 +11,7 @@ The commonly advocated method of passing `CancellationToken` as a parameter to e
 
 `CancellationTokenScope` implements the ambient context pattern for `CancellationToken` instances. It's similar in concept to `TransactionScope`, it allows you to establish a cancellation token at a high level and have it automatically available to all code executing within that scope.
 
-It works seamlessly with async/await execution flows and is fully thread-safe.
+**It works seamlessly with async/await execution flows and is fully thread-safe.**
 
 ## Requirements
 
@@ -23,17 +23,6 @@ It works seamlessly with async/await execution flows and is fully thread-safe.
 ### Overview
 
 The purpose of a `CancellationTokenScope` is to make a `CancellationToken` available to all code executing within its scope without explicitly passing it through method parameters.
-
-You can use the `IAmbientCancellationTokenLocator` interface for dependency injection scenarios:
-
-```csharp
-public interface IAmbientCancellationTokenLocator
-{
-    CancellationToken Get();
-
-    IDisposable Set(CancellationToken cancellationToken);
-}
-```
 
 ### Typical Usage
 
@@ -120,7 +109,7 @@ public async Task RandomServiceMethodAsync(CancellationToken cancellationToken)
 
 ### Dependency Injection Setup
 
-Register the `AmbientCancellationTokenLocator` in your DI container as a singleton:
+You can use the `IAmbientCancellationTokenLocator` interface for dependency injection scenarios. Register the `AmbientCancellationTokenLocator` in your DI container as a singleton:
 
 ```csharp
 // In Program.cs or Startup.cs
@@ -159,10 +148,6 @@ public async Task SafeMethodAsync()
     await SomeOperationAsync(token);
 }
 ```
-
-## Thread Safety
-
-`CancellationTokenScope` is fully thread-safe.
 
 ## Feedback
 
